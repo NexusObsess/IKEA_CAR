@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "IKEACAR.sln"
+    "dotnet.defaultSolution": "IKEA_CAR.sln"
 }
