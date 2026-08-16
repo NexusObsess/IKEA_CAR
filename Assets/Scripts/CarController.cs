@@ -200,7 +200,7 @@ public class CarController : MonoBehaviour
         BackLeftCol.motorTorque = 0;
         BackRightCol.motorTorque = 0;
 
-        speedDisplay = 0;
+        //speedDisplay = 0;
         MotorForceAccerlated = 0;
     }
 
@@ -218,8 +218,6 @@ public class CarController : MonoBehaviour
         FrontRightCol.brakeTorque = 0;
         BackLeftCol.motorTorque = 0;
         BackRightCol.motorTorque = 0;
-
-        MotorForceAccerlated = 0;
 
         MotorForceAccerlated = 0;
     }
