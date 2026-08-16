@@ -1,15 +1,16 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.InputSystem;
 using System.Collections;
+using TMPro;
 
 public class CarController : MonoBehaviour
 {
+    Rigidbody rb;
+
     [Header("On Screen Stats")]
     public int HP;
-    int Time = 0;
-    float speedDisplay = 0;
-    [SerializeField] TextMeshProUGUI UIStats;
+    public float speedDisplay = 0;
+    public TextMeshProUGUI UIStats;
 
     [Header("Hiding")] // not working
     bool canHide = false;
@@ -37,18 +38,7 @@ public class CarController : MonoBehaviour
 
     void Start()
     {
-        UIStats.text = "Health: " + HP + "\nSpeed: " + speedDisplay + "\nTime: " + Time + " seconds";
-        InvokeRepeating("TimeUp", 0.5f, 1f); // increasing time display every second
-    }
-
-    void Update()
-    {
-        UIStats.text = "Health: " + HP + "\nSpeed: " + speedDisplay + "\nTime: " + Time + " seconds"; // updates the UI display every frame
-    }
-
-    void TimeUp()
-    {
-        Time ++;
+        rb = GetComponent<Rigidbody>();
     }
     
     public void OnHide(InputAction.CallbackContext context)
@@ -128,9 +118,10 @@ public class CarController : MonoBehaviour
 
     void FixedUpdate() // every frame i think
     {
+        Debug.Log(GasPress);
         if (GasPress) // if pushing gas
         {
-            SpeedChange = true; // either accerlating or declerlating
+            //SpeedChange = true; // either accerlating or declerlating
             ApplyTorque(); // moves the car using the back wheels - forward and backwards
             ApplySteering(); // rotates the car using front wheels - horiontal
 
@@ -138,25 +129,27 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            if (SpeedChange)
-            {
-                Deccerlating();
-            }
-        }
+            Deccerlating();
 
-        BrakeCheck();
-        //UpdateWheelMeshes(); // not currently working
+            UpdateWheelMeshes(); // not currently working
+            if (!isBraking)
+            {
+                FrontLeftCol.brakeTorque = 0;
+                FrontRightCol.brakeTorque = 0;
+                BackLeftCol.brakeTorque = 0;
+                BackRightCol.brakeTorque = 0;
+            }
+
+            ApplyBrakes();
+        }
     }
 
     
     void Accerlating()
     {
-        if (SpeedChange)
-        {
-            MotorForceAccerlated += accerlationRate; // adds accerlation rate to the force of wheel movements, see ApplyTorque
+        MotorForceAccerlated += accerlationRate; // adds accerlation rate to the force of wheel movements, see ApplyTorque
 
-            speedDisplay = MotorForceAccerlated/100; // meant to look like km/h
-        }
+        speedDisplay = MotorForceAccerlated/100; // meant to look like km/h
     }
 
     void Deccerlating() // still wip
@@ -170,15 +163,11 @@ public class CarController : MonoBehaviour
             BackLeftCol.motorTorque = MotorForceAccerlated; // slow down wheels
             BackRightCol.motorTorque = MotorForceAccerlated;
         }
-        else // stop the car moving, which doesn't work yet
+        else // stop the car moving completely
         {
             //Debug.Log("Stopping at the end of decelerating");
 
-            MotorForceAccerlated = 0;
-            speedDisplay = 0;
-
-            ApplyBrakes();
-            SpeedChange = false;
+            SuddenStop();
         }
     }
 
@@ -194,15 +183,31 @@ public class CarController : MonoBehaviour
         FrontRightCol.steerAngle = Steering * steerAngle;
     }
 
-    void BrakeCheck()
+    void SuddenStop()
     {
-        if (!isBraking) return;
-        ApplyBrakes();
+        Debug.Log("SuddenStop");
+        float stop = SpeedChange ? brakeForce : 0;
+
+        rb.linearVelocity = Vector3.zero;
+        
+        FrontLeftCol.brakeTorque = stop; 
+        FrontRightCol.brakeTorque = stop;
+        BackLeftCol.brakeTorque = stop;
+        BackRightCol.brakeTorque = stop;
+
+        FrontLeftCol.brakeTorque = 0;
+        FrontRightCol.brakeTorque = 0;
+        BackLeftCol.motorTorque = 0;
+        BackRightCol.motorTorque = 0;
+
+        speedDisplay = 0;
+        MotorForceAccerlated = 0;
     }
 
     void ApplyBrakes() // stops car
     {
         brake = isBraking ? brakeForce : 0; // if isbraking is true than the brakeforce is 0
+        Debug.Log("Braking");
         
         FrontLeftCol.brakeTorque = brake; 
         FrontRightCol.brakeTorque = brake;
@@ -213,24 +218,28 @@ public class CarController : MonoBehaviour
         FrontRightCol.brakeTorque = 0;
         BackLeftCol.motorTorque = 0;
         BackRightCol.motorTorque = 0;
+
+        MotorForceAccerlated = 0;
+
+        MotorForceAccerlated = 0;
     }
 
-    // void UpdateWheelMeshes()
-    // {
-    //     UpdateWheel(FrontLeftCol, FrontLeftWheel);
-    //     UpdateWheel(FrontRightCol, FrontRightWheel);
-    //     UpdateWheel(BackLeftCol, BackLeftWheel);
-    //     UpdateWheel(BackRightCol, BackRightWheel);
-    // }
+    void UpdateWheelMeshes()
+    {
+        UpdateWheel(FrontLeftCol, FrontLeftWheel);
+        UpdateWheel(FrontRightCol, FrontRightWheel);
+        UpdateWheel(BackLeftCol, BackLeftWheel);
+        UpdateWheel(BackRightCol, BackRightWheel);
+    }
 
-    // void UpdateWheel(WheelCollider col, Transform trans)
-    // {
-    //     Vector3 pos;
-    //     Quaternion rot;
+    void UpdateWheel(WheelCollider col, Transform trans)
+    {
+        Vector3 pos;
+        Quaternion rot;
 
-    //     col.GetWorldPose(out pos, out rot);
+        col.GetWorldPose(out pos, out rot);
 
-    //     trans.position = pos;
-    //     trans.rotation = rot;
-    // }
+        //trans.position = pos;
+        //trans.rotation = rot;
+    }
 }
