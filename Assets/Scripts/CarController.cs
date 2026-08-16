@@ -69,7 +69,7 @@ public class CarController : MonoBehaviour
     {
         Vector2 Input = context.ReadValue<Vector2>(); // input to vector 2
 
-        Steering = Input.x; // turning car with horizontal input
+        Steering = -Input.x; // turning car with horizontal input
         Throttle = Input.y; // extent with vertical input
     }
 
