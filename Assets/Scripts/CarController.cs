@@ -13,7 +13,7 @@ public class CarController : MonoBehaviour
     public TextMeshProUGUI UIStats;
 
     [Header("Hiding")] // not working
-    bool canHide = false;
+    public bool canHide = false;
     public bool isHiding = false;
 
     [Header("Shielding")] // not working
