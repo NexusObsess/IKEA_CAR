@@ -1,60 +1,39 @@
-using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-
+using UnityEngine.AI;
 public class MeatballEnemy : MonoBehaviour
 {
-    public List<GameObject> meatballDestinations;
-    Vector3 meatballStart;
+    [SerializeField] float waitTimeOnWayPoint = 1.0f;
+    [SerializeField] Path path;
 
-    public float meatballSpeed = 1.0f;
-    public float meatballWaitTime = 1.0f;
+    NavMeshAgent agent;
 
-    public bool isMoving = false;
+    float time = 0.0f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-       meatballStart = GetComponent<Transform>().position;
-        isMoving = true;
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        if (isMoving)
+        agent.destination = path.GetCurrentWayPoint();
+    }
+
+
+    private void Update()
+    {
+       if (agent.remainingDistance <= 0.1f)
         {
-            MoveMeatball();
-        }
-    }
-
-    public void MoveMeatball()
-    {
-        StartCoroutine(MoveMeatballCoroutine());
-    }
-
-    public IEnumerator MoveMeatballCoroutine()
-    {
-        foreach (GameObject destination in meatballDestinations)
-        {
-            Vector3 startPosition = transform.position;
-            Vector3 endPosition = destination.transform.position;
-            float journeyLength = Vector3.Distance(startPosition, endPosition);
-            float startTime = Time.time;
-            while (Vector3.Distance(transform.position, endPosition) > 0.1f)
+            time += Time.deltaTime;
+            if (time >= waitTimeOnWayPoint)
             {
-                float distCovered = (Time.time - startTime) * meatballSpeed;
-                float fractionOfJourney = distCovered / journeyLength;
-                transform.position = Vector3.Lerp(startPosition, endPosition, fractionOfJourney);
-                yield return null;
+                time = 0.0f;
+                agent.destination = path.GetNextWaypoint();
             }
-            transform.position = endPosition; // Ensure the final position is set
-            yield return new WaitForSeconds(meatballWaitTime);
         }
-       //Return to the starting position after reaching all destinations
-        //transform.position = meatballStart;
 
     }
-   
+
 }
