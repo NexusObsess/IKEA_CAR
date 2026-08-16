@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public class MeatballEnemy : MonoBehaviour
 {
+    //How long to pause on each point
     [SerializeField] float waitTimeOnWayPoint = 1.0f;
     [SerializeField] Path path;
 
@@ -18,6 +19,7 @@ public class MeatballEnemy : MonoBehaviour
 
     private void Start()
     {
+        //Call location of waypoint from path script
         agent.destination = path.GetCurrentWayPoint();
     }
 

@@ -1,18 +1,21 @@
 using UnityEngine;
 public class Path : MonoBehaviour
 {
+    //Different ways to follow path
     public enum PathType
     {
         Loop,
         ReverseWhenComplete
     }
 
+    //Array to store different transform points
     public Transform[] waypoints;
     public PathType pathType = PathType.Loop;
 
     private int direction = 1;
     int index;
 
+    //Current waypoint location
     public Vector3 GetCurrentWayPoint()
     {
         return waypoints[index].position;
@@ -29,6 +32,7 @@ public class Path : MonoBehaviour
         return nextWaypoint;
     }
 
+    //Visuals to show waypoint location and distance from entity
     private void OnDrawGizmos()
     {
         if (waypoints == null || waypoints.Length == 0)
@@ -60,6 +64,7 @@ public class Path : MonoBehaviour
         return;
     }
 
+    //Pull next waypoint from array
     private int GetNextWaypointIndex()
     {
         index += direction;
