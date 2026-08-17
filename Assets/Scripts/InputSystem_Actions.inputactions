@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputSystem_Actions",
     "maps": [
         {
@@ -63,6 +64,24 @@
                     "name": "Gas",
                     "type": "Button",
                     "id": "22185278-de96-4c0e-99ce-127c330e10cf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reverse",
+                    "type": "Button",
+                    "id": "c0ae7a96-ed0e-49c5-942a-56f428d73405",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Forward",
+                    "type": "Button",
+                    "id": "3762e4ca-c2d7-447b-a851-16d6b9e3c9cc",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -342,6 +361,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Gas",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36ebb557-b9f8-4b3f-91ca-9955ac3db468",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Reverse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd7d7f43-174d-44bd-9bde-9cf386ff259d",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Forward",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

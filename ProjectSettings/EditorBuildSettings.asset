@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Nicole/MenuScreenMock.unity
+    path: Assets/Scenes/Nicole/Title.unity
     guid: 3507cebc47f66cd4e888098b85fefe52
   - enabled: 1
     path: Assets/Scenes/Nicole/Score.unity
@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Nicole/CarController.unity
     guid: da2f9761bdc7462438ee3c3d90d3ed73
+  - enabled: 1
+    path: Assets/Scenes/Maria/Maze Scene.unity
+    guid: f1bae6b8f211fb9419e31aeffe2ce476
+  - enabled: 1
+    path: Assets/Scenes/Nicole/GameOver.unity
+    guid: e8f3585202227b64b936a2216d950b65
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
