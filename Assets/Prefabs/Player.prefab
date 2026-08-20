@@ -155,8 +155,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2817831741902188650}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10560148, y: 0, z: 0, w: 0.99440855}
-  m_LocalPosition: {x: 0, y: 3.73, z: -7.8}
+  m_LocalRotation: {x: -0.10560154, y: 0, z: 0, w: -0.99440855}
+  m_LocalPosition: {x: -0.0000009536743, y: 3.73, z: -2.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -311,8 +311,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2.3133883, z: 1}
+  m_Center: {x: 0, y: 0.65669304, z: 0}
 --- !u!114 &3650429575610027332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +499,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 22185278-de96-4c0e-99ce-127c330e10cf
     m_ActionName: 'Player/Gas[/Keyboard/shift]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c0ae7a96-ed0e-49c5-942a-56f428d73405
+    m_ActionName: 'Player/Reverse[/Keyboard/s]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3762e4ca-c2d7-447b-a851-16d6b9e3c9cc
+    m_ActionName: 'Player/Forward[/Keyboard/w]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -512,7 +520,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4416190618520771012}
   serializedVersion: 5
-  m_Mass: 1500
+  m_Mass: 1000
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -529,8 +537,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 66
-  m_CollisionDetection: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1 &5436355318714847908
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +698,7 @@ GameObject:
   - component: {fileID: 8692474945572264953}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1372,7 +1380,7 @@ Transform:
   m_GameObject: {fileID: 9179926572410398963}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1410,8 +1418,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9182141720806102435}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10560148, y: 0, z: 0, w: 0.99440855}
-  m_LocalPosition: {x: 0, y: 3.73, z: -7.8}
+  m_LocalRotation: {x: -0.10560154, y: 0, z: 0, w: -0.99440855}
+  m_LocalPosition: {x: -0.0000009536743, y: 3.73, z: -2.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

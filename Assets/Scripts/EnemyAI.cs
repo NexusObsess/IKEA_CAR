@@ -1,7 +1,8 @@
+using System.Xml.Serialization;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
-public class WorkerEnemy : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
     public Transform player;
 
@@ -11,9 +12,13 @@ public class WorkerEnemy : MonoBehaviour
 
     public float health;
 
+    public GameObject shell;
+
+    [SerializeField] private SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer component for changing the enemy's appearance
+
     //Patrolling
     public Vector3 walkPoint;
-    public bool walkPointSet;
+    bool walkPointSet;
     public float walkPointRange;
 
 
@@ -22,13 +27,20 @@ public class WorkerEnemy : MonoBehaviour
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
     public bool isPatrolling;
+    public bool isDead;
 
+
+    //Visualises the character taking damage
+    [SerializeField] private float hurtDuration;
+    [SerializeField] private int numberOfFlashes;
     [SerializeField] private Collider enemyCollider;
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         gameObject.layer = LayerMask.NameToLayer("whatisEnemy");
+        isDead = false;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCollider = GetComponent<Collider>();
         enemyCollider.enabled = true;
     }
@@ -40,19 +52,24 @@ public class WorkerEnemy : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
 
-        if (!playerInSightRange && !isPatrolling)
+        if (!playerInSightRange && !isPatrolling && !isDead)
         {
             Idle();
         }
-        if (!playerInSightRange && isPatrolling)
+        if (!playerInSightRange && isPatrolling && !isDead)
         {
             Patrolling();
         }
-        if (playerInSightRange)
+        if (playerInSightRange && !isDead)
         {
             Chasing();
         }
 
+
+        if (isDead)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Interactible");
+        }
 
     }
 
@@ -88,8 +105,7 @@ public class WorkerEnemy : MonoBehaviour
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        Debug.DrawLine(transform.position, walkPoint);
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        if (Physics.Raycast(walkPoint, -transform.up, 8f, whatIsGround))
         {
             walkPointSet = true;
         }
@@ -105,18 +121,36 @@ public class WorkerEnemy : MonoBehaviour
 
 
 
-    private void OnCollisionEnter(Collision collision)
+
+
+    public void TakeDamage(int damage)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        StartCoroutine(DamageFlash());
+        health -= damage;
+        if (health <= 0)
         {
-            Debug.Log("Player hit by enemy");
-            //PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            //if (playerHealth != null)
-            //{
-            //    playerHealth.TakeDamage(10f);
-            //}
+            isDead = true;
+            Dead();
         }
     }
+    private void Dead()
+    {
+        agent.SetDestination(transform.position);
+    }
+
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player") && !isDead)
+    //    {
+    //        Debug.Log("Player hit by enemy");
+    //        PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+    //        if (playerHealth != null)
+    //        {
+    //            playerHealth.TakeDamage(10f);
+    //        }
+    //    }
+    //}
 
     private void OnDrawGizmosSelected()
     {
@@ -126,6 +160,15 @@ public class WorkerEnemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
-
+    public IEnumerator DamageFlash()
+    {
+        for (int i = 0; i < numberOfFlashes; i++)
+        {
+            spriteRenderer.color = new Color(1, 0, 0, 0.5f);
+            yield return new WaitForSeconds(hurtDuration / (numberOfFlashes * 2));
+            spriteRenderer.color = Color.white;
+            yield return new WaitForSeconds(hurtDuration / (numberOfFlashes * 2));
+        }
+    }
 
 }

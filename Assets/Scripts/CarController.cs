@@ -180,7 +180,7 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("changedirection" + changeDirection);
+        //Debug.Log("changedirection" + changeDirection);
     }
 
     void FixedUpdate() // every frame i think
