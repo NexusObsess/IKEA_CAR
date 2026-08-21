@@ -18,12 +18,14 @@ public class CarController : MonoBehaviour
     [Header("Hiding")] // not working
     public bool canHide = false;
     public bool isHiding = false;
+    [SerializeField] Animator anim;
 
     [Header("Shielding")] // not working
     bool canShield = true;
     public bool isShielding = false;
     [SerializeField] int ShieldLength;
     [SerializeField] int ShieldCooldown;
+    [SerializeField] Animator anim2;
 
     [Header("Wheels")] // not working
 
@@ -57,8 +59,18 @@ public class CarController : MonoBehaviour
             if (context.performed) // toogles hiding rather than having to hold it
             {
                 isHiding = !isHiding; // Toggle state of bool
-                // animation logic
                 Debug.Log("hiding " + isHiding);
+
+                if (isHiding)
+                {
+                    anim.SetBool("Hide", true);
+                    anim.SetBool("Unhide", false);
+                }
+                else
+                {
+                    anim.SetBool("Hide", false);
+                    anim.SetBool("Unhide", true);
+                }
             }
         }
     }
@@ -160,9 +172,15 @@ public class CarController : MonoBehaviour
 
     IEnumerator ShieldDuration()
     {
+        anim2.SetBool("Is", true);
+        anim2.SetBool("Not", false);
+
         yield return new WaitForSeconds(ShieldLength); // shield active for set seconds
         isShielding = false; // turn off shield
         Debug.Log("shielding " + isShielding);
+
+        anim2.SetBool("Is", false);
+        anim2.SetBool("Not", true);
 
         // animation logic
 
