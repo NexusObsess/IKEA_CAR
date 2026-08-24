@@ -282,14 +282,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484d1fd1dd375aa4db16fa14293c4dbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Forklift
-  waitTimeOnWayPoint: 1
+  waitTimeOnWayPoint: 0
   path: {fileID: 3815243875471581921}
   whatisPlayer:
     serializedVersion: 2
     m_Bits: 256
   player: {fileID: 0}
   forkliftRaycast: {fileID: 2072099959772554627}
-  distance: 150
+  distance: 300
 --- !u!65 &5203993986053855116
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 58.205452
-  m_Speed: 30
+  m_Speed: 100
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

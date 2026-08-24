@@ -12,9 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     public float health;
 
-    public GameObject shell;
 
-    [SerializeField] private SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer component for changing the enemy's appearance
 
     //Patrolling
     public Vector3 walkPoint;
@@ -40,7 +38,6 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         gameObject.layer = LayerMask.NameToLayer("whatisEnemy");
         isDead = false;
-        spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCollider = GetComponent<Collider>();
         enemyCollider.enabled = true;
     }
@@ -66,10 +63,6 @@ public class EnemyAI : MonoBehaviour
         }
 
 
-        if (isDead)
-        {
-            gameObject.layer = LayerMask.NameToLayer("Interactible");
-        }
 
     }
 
@@ -121,36 +114,18 @@ public class EnemyAI : MonoBehaviour
 
 
 
-
-
-    public void TakeDamage(int damage)
+    private void OnCollisionEnter(Collision collision)
     {
-        StartCoroutine(DamageFlash());
-        health -= damage;
-        if (health <= 0)
+        if (collision.gameObject.CompareTag("Player") && !isDead)
         {
-            isDead = true;
-            Dead();
+            Debug.Log("Player hit by enemy");
+            CarController carController = collision.gameObject.GetComponent<CarController>();
+            if (carController != null)
+            {
+                carController.TakeDamage(10);
+            }
         }
     }
-    private void Dead()
-    {
-        agent.SetDestination(transform.position);
-    }
-
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Player") && !isDead)
-    //    {
-    //        Debug.Log("Player hit by enemy");
-    //        PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-    //        if (playerHealth != null)
-    //        {
-    //            playerHealth.TakeDamage(10f);
-    //        }
-    //    }
-    //}
 
     private void OnDrawGizmosSelected()
     {
@@ -160,15 +135,5 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
-    public IEnumerator DamageFlash()
-    {
-        for (int i = 0; i < numberOfFlashes; i++)
-        {
-            spriteRenderer.color = new Color(1, 0, 0, 0.5f);
-            yield return new WaitForSeconds(hurtDuration / (numberOfFlashes * 2));
-            spriteRenderer.color = Color.white;
-            yield return new WaitForSeconds(hurtDuration / (numberOfFlashes * 2));
-        }
-    }
 
 }

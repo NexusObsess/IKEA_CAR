@@ -10,11 +10,16 @@ public class MeatballEnemy : MonoBehaviour
 
     NavMeshAgent agent;
 
+    Rigidbody rb;
+    Collider col;
+
     float time = 0.0f;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
     }
 
     private void Start()
@@ -23,7 +28,18 @@ public class MeatballEnemy : MonoBehaviour
         agent.destination = path.GetCurrentWayPoint();
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player hit by enemy");
+            CarController carController = collision.gameObject.GetComponent<CarController>();
+            if (carController != null)
+            {
+                carController.TakeDamage(15);
+            }
+        }
+    }
     private void Update()
     {
        if (agent.remainingDistance <= 0.1f)

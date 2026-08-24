@@ -9,6 +9,9 @@ using static UnityEngine.Rendering.DebugUI;
 public class CarController : MonoBehaviour
 {
     Rigidbody rb;
+    Collider col;
+
+    public SceneManagert sceneManager;
 
     [Header("On Screen Stats")]
     public int HP;
@@ -49,6 +52,24 @@ public class CarController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log(HP);
+        HP -= (int)damage;
+        if(HP <= 0 ) 
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Debug.Log("You Died");
+        sceneManager.LoadScene("Title");
+
     }
 
     public void OnHide(InputAction.CallbackContext context)

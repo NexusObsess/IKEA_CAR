@@ -20,7 +20,12 @@ public class SceneManagert : MonoBehaviour
         
     }
 
-   private void OnTriggerEnter(UnityEngine.Collider other)
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void OnTriggerEnter(UnityEngine.Collider other)
     {
         if (other.CompareTag("Exit"))
         {

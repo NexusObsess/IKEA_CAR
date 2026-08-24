@@ -17,6 +17,9 @@ public class Forklift : MonoBehaviour
 
     NavMeshAgent agent;
 
+    Rigidbody rb;
+    Collider col;
+
 
     public float distance = 5.0f;
     float time = 0.0f;
@@ -24,6 +27,8 @@ public class Forklift : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
     }
 
     private void Start()
@@ -40,7 +45,18 @@ public class Forklift : MonoBehaviour
 
     }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player hit by enemy");
+            CarController carController = collision.gameObject.GetComponent<CarController>();
+            if (carController != null)
+            {
+                carController.TakeDamage(20);
+            }
+        }
+    }
     void CheckObstruction()
     {
 
