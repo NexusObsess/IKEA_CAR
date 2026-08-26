@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293130f8284c6064eb20587cd5fba476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneSolo: CarController
+  nextSceneSolo: Maze Scene
   nextMainLevel: CarController
   gameManager: Score
   sceneToUnload: MenuScreenMock

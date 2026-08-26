@@ -12,14 +12,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Nicole/Score.unity
     guid: 560d54cfa80b5dc47a3e21e2b1fab953
   - enabled: 1
-    path: Assets/Scenes/Nicole/CarController.unity
-    guid: da2f9761bdc7462438ee3c3d90d3ed73
-  - enabled: 1
     path: Assets/Scenes/Maria/Maze Scene.unity
     guid: f1bae6b8f211fb9419e31aeffe2ce476
   - enabled: 1
+    path: Assets/Scenes/Angelina/third level building.unity
+    guid: d22061d6306246049af25de0dcce1dae
+  - enabled: 1
     path: Assets/Scenes/Nicole/GameOver.unity
     guid: e8f3585202227b64b936a2216d950b65
+  - enabled: 1
+    path: Assets/Scenes/Nicole/End.unity
+    guid: 4b7a075ce9e154745b06a9737c76e19a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

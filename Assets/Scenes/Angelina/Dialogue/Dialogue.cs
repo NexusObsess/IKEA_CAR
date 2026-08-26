@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using Unity.VectorGraphics;
+using UnityEngine.SceneManagement;
 
 public class Dialogue : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class Dialogue : MonoBehaviour
     void Start()
     {
         gameObject.SetActive(false);
+        StartDialogue();
     }
 
     public void StartDialogue()
@@ -74,6 +77,7 @@ public class Dialogue : MonoBehaviour
         {
             dialogueActive = false;
             gameObject.SetActive(false);
+            SceneManager.LoadScene("End");
         }
     }
 }
